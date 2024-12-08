@@ -6,6 +6,8 @@ public class Recipe {
     private String title;
     private String description;
     private double timeToPrepared;
+    private static int idCounter = 0;
+    private int id;
 
     public Recipe(String title){
         this.title = title;
@@ -17,6 +19,7 @@ public class Recipe {
         this.title = title;
         this.description = description;
         this.timeToPrepared = timeToPrepared;
+        this.id = ++idCounter;
     }
 
     public static Recipe createNewRecipe(){
@@ -33,6 +36,7 @@ public class Recipe {
 
     @Override
     public String toString(){
-        return this.title;
+
+        return String.format("Przepis: %s, ma id: %d", this.title,this.id);
     }
 }
