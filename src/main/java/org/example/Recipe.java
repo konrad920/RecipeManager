@@ -37,6 +37,8 @@ public class Recipe {
     @Override
     public String toString(){
 
-        return String.format("Przepis: %s, ma id: %d", this.title,this.id);
+        return String.format("%d Przepis to: %s\n" +
+                "opis: ", this.id, this.title, this.description);
     }
+
 }
