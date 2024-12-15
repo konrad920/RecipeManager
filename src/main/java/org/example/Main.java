@@ -2,13 +2,14 @@ package org.example;
 
 import java.util.Scanner;
 
-public class Main {
+public class Main{
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ConsoleLogger consoleLogger = new ConsoleLogger();
         ListRepository listRepository = new ListRepository(consoleLogger);
-        byte operationNumber;
+        Frame frame = new Frame();
 
+        byte operationNumber;
         do {
             System.out.println("Witaj w programie do przepisów kulinarnych!!!");
             System.out.println("1 - Wyświetl listę przepisów");
