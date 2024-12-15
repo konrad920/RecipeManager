@@ -1,12 +1,12 @@
 package org.example;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        ListRepository listRepository = new ListRepository();
+        ConsoleLogger consoleLogger = new ConsoleLogger();
+        ListRepository listRepository = new ListRepository(consoleLogger);
         byte operationNumber;
 
         do {
@@ -21,20 +21,36 @@ public class Main {
 
             switch (operationNumber) {
                 case 1:
-                    listRepository.printRecipes();
+                    try {
+                        listRepository.printRecipes();
+                    } catch (NullPointerException e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 2:
                     System.out.print("Podaj id przepisu do wyświetlenia: ");
                     int idToGet = scanner.nextInt();
-                    listRepository.printRecipe(idToGet-1);
+                    try {
+                        listRepository.printRecipe(idToGet - 1);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 3:
-                    listRepository.addRecipe();
+                    try {
+                        listRepository.addRecipe();
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 4:
                     System.out.print("Podaj id przepisu do usunięcia: ");
                     int idToDelete = scanner.nextInt();
-                    listRepository.deleteRecipeByID(idToDelete-1);
+                    try {
+                        listRepository.deleteRecipeByID(idToDelete - 1);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
                     break;
                 case 9:
                     System.out.println("Zakończyłeś pracę programu");
@@ -42,6 +58,6 @@ public class Main {
                 default:
                     System.out.println("Podany numer operacji nie istnieje");
             }
-        }while (operationNumber != 9);
+        } while (operationNumber != 9);
     }
 }

@@ -26,19 +26,30 @@ public class Recipe {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Podaj tytuł przepisu: ");
         String title = scanner.next();
+        scanner.nextLine();
         System.out.println("Podaj opis przepisu: ");
-        String description = scanner.next();
+        String description = scanner.nextLine();
         System.out.println("Podaj czas potrzebny do przygotowania tego dania: ");
         double timeToPrepared = scanner.nextDouble();
 
         return new Recipe(title, description, timeToPrepared);
     }
 
+    public String getTitle() {
+        return title;
+    }
+
     @Override
     public String toString(){
 
-        return String.format("%d Przepis to: %s\n" +
-                "opis: ", this.id, this.title, this.description);
+        return String.format("%d Przepis to: %s\n", this.id, this.title);
+    }
+
+    boolean isEqual(Recipe recipe){
+        boolean areTitleSame = this.title.equalsIgnoreCase(recipe.title);
+        boolean arePreparedTimeSame = this.timeToPrepared == recipe.timeToPrepared;
+
+        return areTitleSame && arePreparedTimeSame;
     }
 
 }
