@@ -9,20 +9,20 @@ public class Recipe {
     private static int idCounter = 0;
     private int id;
 
-    public Recipe(String title){
+    public Recipe(String title) {
         this.title = title;
         this.description = null;
         this.timeToPrepared = 0;
     }
 
-    public Recipe(String title, String description, double timeToPrepared){
+    public Recipe(String title, String description, double timeToPrepared) {
         this.title = title;
         this.description = description;
         this.timeToPrepared = timeToPrepared;
         this.id = ++idCounter;
     }
 
-    public static Recipe createNewRecipe(){
+    public static Recipe createNewRecipe() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Podaj tytuł przepisu: ");
         String title = scanner.next();
@@ -35,17 +35,46 @@ public class Recipe {
         return new Recipe(title, description, timeToPrepared);
     }
 
+    public void editRecipe() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Co chcesz zmienić");
+        System.out.println("1 - Tytuł przepisu");
+        System.out.println("2 - Opis przepisu");
+        System.out.println("3 - Czas przygotowania dania");
+        byte option = scanner.nextByte();
+        switch (option){
+            case 1:
+                System.out.print("Podaj nowy tytuł przepisu: ");
+                String editedTitle = scanner.next();
+                scanner.nextLine();
+                this.title = editedTitle;
+                break;
+            case 2:
+                System.out.print("Podaj nowy opis przepisu: ");
+                String editedDescription = scanner.nextLine();
+                scanner.nextLine();
+                this.description = editedDescription;
+                break;
+            case 3:
+                System.out.print("Podaj nowy czas potrzebny do przygotowania tego dania: ");
+                this.timeToPrepared = scanner.nextDouble();
+                break;
+            default:
+                System.out.println("Podany numer operacji nie istnieje");
+        }
+    }
+
     public String getTitle() {
         return title;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
 
         return String.format("%d Przepis to: %s\n", this.id, this.title);
     }
 
-    boolean isEqual(Recipe recipe){
+    boolean isEqual(Recipe recipe) {
         boolean areTitleSame = this.title.equalsIgnoreCase(recipe.title);
         boolean arePreparedTimeSame = this.timeToPrepared == recipe.timeToPrepared;
 

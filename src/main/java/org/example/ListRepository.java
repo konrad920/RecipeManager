@@ -36,6 +36,14 @@ public class ListRepository {
         logger.info(infoString);
     }
 
+    public void editRecipeByID(int id) throws Exception {
+        Recipe recipeToEdit = getRecipeById(id);
+        String recipeToEditTitle = recipeToEdit.getTitle();
+        recipeToEdit.editRecipe();
+        String infoString = String.format("Usunięto przepis %s", recipeToEditTitle);
+        logger.info(infoString);
+    }
+
     public Recipe getRecipeById(int id) throws Exception {
         ArrayList<Recipe> recipeArrayList = getRecipes();
         if(id >= 0 && id < recipeArrayList.size()){

@@ -2,7 +2,7 @@ package org.example;
 
 import java.util.Scanner;
 
-public class Main{
+public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ConsoleLogger consoleLogger = new ConsoleLogger();
@@ -18,6 +18,7 @@ public class Main{
             System.out.println("2 - Wyświetl przepis o konkretnym numerze ID");
             System.out.println("3 - Dodaj nowy przepis");
             System.out.println("4 - Usuń przepis z listy");
+            System.out.println("5 - Edytuj przepis z listy");
             System.out.println("9 - Zakończ działanie programu\n");
             System.out.print("Wybierz co chcesz zrobić: ");
             operationNumber = scanner.nextByte();
@@ -51,6 +52,15 @@ public class Main{
                     int idToDelete = scanner.nextInt();
                     try {
                         listRepository.deleteRecipeByID(idToDelete - 1);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 5:
+                    System.out.print("Podaj id przepisu do edycji: ");
+                    int idToEdit = scanner.nextInt();
+                    try {
+                        listRepository.editRecipeByID(idToEdit - 1);
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
                     }
