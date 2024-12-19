@@ -8,6 +8,8 @@ public class Main{
         ConsoleLogger consoleLogger = new ConsoleLogger();
         ListRepository listRepository = new ListRepository(consoleLogger);
         Frame frame = new Frame();
+        frame.setVisible(true);
+
 
         byte operationNumber;
         do {
