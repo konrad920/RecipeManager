@@ -7,9 +7,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ConsoleLogger consoleLogger = new ConsoleLogger();
         ListRepository listRepository = new ListRepository(consoleLogger);
+        FileRepository fileRepository = new FileRepository();
         Frame frame = new Frame();
         frame.setVisible(true);
 
+        fileRepository.addNewFile();
 
         byte operationNumber;
         do {
@@ -56,15 +58,15 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                     break;
-                case 5:
-                    System.out.print("Podaj id przepisu do edycji: ");
-                    int idToEdit = scanner.nextInt();
-                    try {
-                        listRepository.editRecipeByID(idToEdit - 1);
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
+//                case 5:
+//                    System.out.print("Podaj id przepisu do edycji: ");
+//                    int idToEdit = scanner.nextInt();
+//                    try {
+//                        listRepository.editRecipeByID(idToEdit - 1);
+//                    } catch (Exception e) {
+//                        System.out.println(e.getMessage());
+//                    }
+//                    break;
                 case 9:
                     System.out.println("Zakończyłeś pracę programu");
                     break;
