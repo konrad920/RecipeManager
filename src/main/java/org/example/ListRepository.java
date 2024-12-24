@@ -3,8 +3,8 @@ package org.example;
 import java.util.ArrayList;
 
 public class ListRepository {
-    private ArrayList<Recipe> recipes = new ArrayList<>();
-    private ConsoleLogger logger;
+    private final ArrayList<Recipe> recipes = new ArrayList<>();
+    private final ConsoleLogger logger;
 
     public ListRepository(ConsoleLogger logger) {
         this.logger = logger;
@@ -36,13 +36,13 @@ public class ListRepository {
         logger.info(infoString);
     }
 
-//    public void editRecipeByID(int id) throws Exception {
-//        Recipe recipeToEdit = getRecipeById(id);
-//        String recipeToEditTitle = recipeToEdit.getTitle();
-//        recipeToEdit.editRecipe();
-//        String infoString = String.format("Zedytowano przepis %s", recipeToEditTitle);
-//        logger.info(infoString);
-//    }
+    public void editRecipeByID(int id) throws Exception {
+        Recipe recipeToEdit = getRecipeById(id);
+        String recipeToEditTitle = recipeToEdit.getTitle();
+        recipeToEdit.editRecipe();
+        String infoString = String.format("Zedytowano przepis %s", recipeToEditTitle);
+        logger.info(infoString);
+    }
 
     public Recipe getRecipeById(int id) throws Exception {
         ArrayList<Recipe> recipeArrayList = getRecipes();

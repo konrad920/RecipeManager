@@ -1,5 +1,6 @@
 package org.example;
 
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class Main {
@@ -7,11 +8,9 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         ConsoleLogger consoleLogger = new ConsoleLogger();
         ListRepository listRepository = new ListRepository(consoleLogger);
-        FileRepository fileRepository = new FileRepository();
+        FileRepository fileRepository = new FileRepository(consoleLogger);
         Frame frame = new Frame();
         frame.setVisible(true);
-
-        fileRepository.addNewFile();
 
         byte operationNumber;
         do {
@@ -21,6 +20,7 @@ public class Main {
             System.out.println("3 - Dodaj nowy przepis");
             System.out.println("4 - Usuń przepis z listy");
             System.out.println("5 - Edytuj przepis z listy");
+            System.out.println("6 - Stwórz plik przepisu");
             System.out.println("9 - Zakończ działanie programu\n");
             System.out.print("Wybierz co chcesz zrobić: ");
             operationNumber = scanner.nextByte();
@@ -58,15 +58,22 @@ public class Main {
                         System.out.println(e.getMessage());
                     }
                     break;
-//                case 5:
-//                    System.out.print("Podaj id przepisu do edycji: ");
-//                    int idToEdit = scanner.nextInt();
-//                    try {
-//                        listRepository.editRecipeByID(idToEdit - 1);
-//                    } catch (Exception e) {
-//                        System.out.println(e.getMessage());
-//                    }
-//                    break;
+                case 5:
+                    System.out.print("Podaj id przepisu do edycji: ");
+                    int idToEdit = scanner.nextInt();
+                    try {
+                        listRepository.editRecipeByID(idToEdit - 1);
+                    } catch (Exception e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+                case 6:
+                    try {
+                        fileRepository.addNewFile();
+                    } catch (FileNotFoundException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
                 case 9:
                     System.out.println("Zakończyłeś pracę programu");
                     break;

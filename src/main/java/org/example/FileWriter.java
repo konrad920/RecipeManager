@@ -12,15 +12,15 @@ public class FileWriter {
         this.path = path;
     }
 
-    public void writeFile(List<String> text, double value) throws FileNotFoundException {
+    public void writeFile(String text, double value) throws FileNotFoundException {
         PrintWriter write = new PrintWriter(this.path);
         String timeToPrepared = String.format("%s%.2f", timeToPreparedText, value);
         write.println(timeToPrepared);
         write.println();
-        for(String line : text){
-            write.println(line);
-        }
-        //write.println(text);
+        write.print(text);
+//        for(String line : text){
+//            write.println(line);
+//        }
         write.close();
     }
 }
