@@ -16,7 +16,7 @@ public class FileWriter {
         PrintWriter write = new PrintWriter(this.path);
         String timeToPrepared = String.format("%s%.2f", timeToPreparedText, value);
         write.println(timeToPrepared);
-        write.println();
+        write.println("Sposób wykonania:");
         write.print(text);
 //        for(String line : text){
 //            write.println(line);
