@@ -24,19 +24,18 @@ public class FileRepository {
     }
 
     public void printFile(String fileNameToFind) throws FileNotFoundException {
-        File fileFound = getFileTitle(this.directory, fileNameToFind);
-        //String path = String.format("%sre.txt", fileDestinationPrefix);
+        File fileFound = getFile(this.directory, fileNameToFind);
         FileReader fileReader = new FileReader(fileFound.getAbsolutePath());
         fileReader.readFile();
     }
 
-    private File getFileTitle(File directory, String fileNameToFind) throws FileNotFoundException {
+    private File getFile(File directory, String fileNameToFind) throws FileNotFoundException {
         if (directory.isDirectory()) {
             File[] files = directory.listFiles();
             if (files != null) {
                 for (File file : files) {
                     if (file.isDirectory()) {
-                        getFileTitle(file, fileNameToFind);
+                        getFile(file, fileNameToFind);
                     } else {
                         if(file.getName().equals(fileNameToFind)){
                             return file;
@@ -45,6 +44,6 @@ public class FileRepository {
                 }
             }
         }
-        throw new FileNotFoundException();
+        throw new FileNotFoundException("Nie ma takiego przepisu");
     }
 }

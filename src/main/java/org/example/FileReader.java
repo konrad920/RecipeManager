@@ -19,13 +19,11 @@ public class FileReader {
         Scanner in = new Scanner(file);
 
         List<String>listOfLines = new ArrayList<>();
-        int counter = 0;
         while (true) {
             try{
                 String line = in.nextLine();
                 if(line != null){
                     listOfLines.add(line);
-                    counter++;
                 }
             }catch (NoSuchElementException e){
                 System.out.println("Zakończono wczytywanie pliku");

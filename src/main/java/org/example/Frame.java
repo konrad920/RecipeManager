@@ -22,6 +22,7 @@ public class Frame extends JFrame {
     }
 
     public void initComponents(){
+
         GroupLayout layout = new GroupLayout(getContentPane());
         this.getContentPane().setLayout(layout);
 
@@ -29,33 +30,32 @@ public class Frame extends JFrame {
         layout.setAutoCreateContainerGaps(true);
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
-                        .addComponent(button1)
                         .addGroup(
-                                layout.createParallelGroup().addComponent(button2).addComponent(button4)
-                        )
-                        .addComponent(button3)
-                        .addGap(10, 20,Short.MAX_VALUE)
-                        .addComponent(banuluj)
+                                layout.createParallelGroup().addComponent(bNewFile).addComponent(bShowFile)
+                        ).addGroup(
+                                layout.createParallelGroup().addComponent(bEditRecipe).addComponent(bDeleteRecipe)
+                        ).addGap(10, 20,Short.MAX_VALUE)
+                        .addComponent(bExit)
                 );
 
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
                         .addGroup(
-                                layout.createParallelGroup().addComponent(button1).addComponent(button2).addComponent(button3)
-                        )
-                        .addComponent(button4)
-                        .addGap(10, 20,Short.MAX_VALUE)
-                        .addComponent(banuluj)
+                                layout.createParallelGroup().addComponent(bNewFile).addComponent(bEditRecipe)
+                        ).addGroup(
+                                layout.createParallelGroup().addComponent(bShowFile).addComponent(bDeleteRecipe)
+                        ).addGap(10, 20,Short.MAX_VALUE)
+                        .addComponent(bExit)
         );
 
         this.pack();
     }
 
-    JButton button1 = new JButton("butto1");
-    JButton button2 = new JButton("butto2");
-    JButton button3 = new JButton("butto3");
-    JButton button4 = new JButton("butto4");
-    JButton banuluj = new JButton("Anuluj");
+    JButton bNewFile = new JButton("Add New Recipe");
+    JButton bShowFile = new JButton("Show Recipe");
+    JButton bEditRecipe = new JButton("Edit Recipe");
+    JButton bDeleteRecipe = new JButton("Delete Recipe");
+    JButton bExit = new JButton("Exit");
 
 //    public void initComponents(){
 //        ok = new JButton("Ok");

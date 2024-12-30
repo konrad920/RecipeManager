@@ -2,7 +2,6 @@ package org.example;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.List;
 
 public class FileWriter {
     private final String path;
@@ -18,9 +17,6 @@ public class FileWriter {
         write.println(timeToPrepared);
         write.println("Sposób wykonania:");
         write.print(text);
-//        for(String line : text){
-//            write.println(line);
-//        }
         write.close();
     }
 }
