@@ -2,15 +2,15 @@ package org.example;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Frame extends JFrame {
+
     public Frame() {
         //podstawowe ustawienia ramki
-        this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setTitle("Recipe Manager");
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\programy java\\RecipeManager\\img\\icon.jpg"));
 
@@ -31,6 +31,11 @@ public class Frame extends JFrame {
         ActionListener timer = new TimeListener();
         Timer clock = new Timer(1000, timer);
         clock.start();
+
+        this.addWindowListener(new ExitHandler());
+
+        bNewFile.addActionListener(new NewRecipeHandler());
+        bExit.addActionListener(new ExitHandler());
 
         GroupLayout layout = new GroupLayout(getContentPane());
         this.getContentPane().setLayout(layout);
@@ -72,6 +77,32 @@ public class Frame extends JFrame {
     JButton bDeleteRecipe = new JButton("Delete Recipe");
     JButton bExit = new JButton("Exit");
 
+    private class NewRecipeHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            NewRecipeFrame recipeFrame = new NewRecipeFrame();
+            recipeFrame.setVisible(true);
+        }
+    }
+
+    private class ExitHandler extends WindowAdapter implements ActionListener {
+
+        @Override
+        public void windowClosing(WindowEvent e) {
+            int option = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zamknąć program?", "Exit confirmation", JOptionPane.YES_NO_OPTION);
+            if (option == 0)
+                System.exit(0);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int option = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zamknąć program?", "Exit confirmation", JOptionPane.YES_NO_OPTION);
+            if (option == 0)
+                System.exit(0);
+        }
+    }
+
     private class TimeListener implements ActionListener {
 
         @Override
@@ -80,40 +111,19 @@ public class Frame extends JFrame {
         }
     }
 
-    private String getTime(){
+    private String getTime() {
         GregorianCalendar calendar = new GregorianCalendar();
-        String h = ""+calendar.get(Calendar.HOUR_OF_DAY);
-        String min = ""+calendar.get(Calendar.MINUTE);
-        String sec = ""+calendar.get(Calendar.SECOND);
+        String h = "" + calendar.get(Calendar.HOUR_OF_DAY);
+        String min = "" + calendar.get(Calendar.MINUTE);
+        String sec = "" + calendar.get(Calendar.SECOND);
 
-        if(Integer.parseInt(h) < 10)
+        if (Integer.parseInt(h) < 10)
             h = "0" + h;
-        if(Integer.parseInt(min) < 10)
+        if (Integer.parseInt(min) < 10)
             min = "0" + min;
-        if(Integer.parseInt(sec) < 10)
+        if (Integer.parseInt(sec) < 10)
             sec = "0" + sec;
 
         return h + " : " + min + " : " + sec;
     }
-
-//    public void initComponents(){
-//        ok = new JButton("Ok");
-//        anuluj = new JButton("Anuluj");
-//
-//        Container buttons = this.getContentPane();
-//        ok.setPreferredSize(ok.getPreferredSize());
-//        anuluj.setPreferredSize(anuluj.getPreferredSize());
-//
-//        panel1.add(ok);
-//        panel1.add(anuluj);
-//
-//        //this.getContentPane().add(ok, BorderLayout.LINE_START);
-//        buttons.add(panel1, BorderLayout.LINE_START);
-//        //buttons.add(anuluj, BorderLayout.LINE_END);
-//        this.pack();
-//    }
-//
-//    JPanel panel1 = new JPanel();
-//    JButton ok;
-//    JButton anuluj;
 }

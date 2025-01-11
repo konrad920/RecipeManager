@@ -23,6 +23,17 @@ public class FileRepository {
         throw new FileNotFoundException(infoString);
     }
 
+    public void addNewFileFromFrame(String title, String description, double timeToPrepared) throws FileNotFoundException {
+        Recipe newRecipe = new Recipe(title, description, timeToPrepared);
+        String path = String.format("%s%s.txt", fileDestinationPrefix, newRecipe.getTitle());
+        FileWriter fileWriter = new FileWriter(path);
+        fileWriter.writeFile(newRecipe.getDescription(), newRecipe.getTimeToPrepared());
+
+        String infoString = String.format("Utworzono plik %s", newRecipe.getTitle());
+        logger.info(infoString);
+        throw new FileNotFoundException(infoString);
+    }
+
     public void printFile(String fileNameToFind) throws FileNotFoundException {
         File fileFound = getFile(this.directory, fileNameToFind);
         FileReader fileReader = new FileReader(fileFound.getAbsolutePath());
