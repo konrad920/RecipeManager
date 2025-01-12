@@ -1,4 +1,4 @@
-package org.example;
+package org.example.DataAccess;
 
 import java.util.Scanner;
 

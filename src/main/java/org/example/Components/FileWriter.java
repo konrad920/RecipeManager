@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Components;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;

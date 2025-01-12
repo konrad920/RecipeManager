@@ -1,7 +1,9 @@
-package org.example;
+package org.example.UI;
+
+import org.example.Components.ConsoleLogger;
+import org.example.DataAccess.FileRepository;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
@@ -19,7 +21,6 @@ public class NewRecipeFrame extends JDialog {
     }
 
     public void initComponents() {
-
         confirm.addActionListener(new ConfirmHandler());
 
         GroupLayout layout = new GroupLayout(getContentPane());
@@ -36,7 +37,7 @@ public class NewRecipeFrame extends JDialog {
                                         .addComponent(timeToPreparedLabel)
                                         .addComponent(timeToPrepareField)
                                         .addComponent(descriptionLabel)
-                                        .addComponent(descriptionField)
+                                        .addComponent(scrollPanel)
                                         .addComponent(confirm)
                         )
         );
@@ -49,17 +50,17 @@ public class NewRecipeFrame extends JDialog {
                         .addComponent(timeToPrepareField)
                         .addGap(10, 20, Short.MAX_VALUE)
                         .addComponent(descriptionLabel)
-                        .addComponent(descriptionField)
+                        .addComponent(scrollPanel)
                         .addGap(10, 20, Short.MAX_VALUE)
                         .addComponent(confirm)
         );
-
         this.pack();
     }
 
     private JTextField titleField = new JTextField(10);
     private JTextField timeToPrepareField = new JTextField(10);
-    private JTextArea descriptionField = new JTextArea(10, 10);
+    private JTextArea descriptionArea = new JTextArea(10, 10);
+    private JScrollPane scrollPanel = new JScrollPane(descriptionArea);
     private JButton confirm = new JButton("Zatwierdź");
     private JLabel titleLabel = new JLabel("Tytuł dania:");
     private JLabel timeToPreparedLabel = new JLabel("Czas potrzebny do przygotowania:");
@@ -73,22 +74,15 @@ public class NewRecipeFrame extends JDialog {
                 String title = titleField.getText();
                 isStringNull(title);
                 double timeToPrepared = getTimeAsDouble(timeToPrepareField.getText());
-                String description = descriptionField.getText();
+                String description = descriptionArea.getText();
                 fileRepository.addNewFileFromFrame(title, description, timeToPrepared);
             } catch (FileNotFoundException | NumberFormatException | NullPointerException ex) {
                 System.out.println(ex.getMessage());
             }
-//            }catch (FileNotFoundException ex) {
-//                System.out.println(ex.getMessage());
-//            }catch (NumberFormatException ex){
-//                System.out.println(ex.getMessage());
-//            }catch (NullPointerException ex){
-//                System.out.println(ex.getMessage());
-//            }
         }
 
-        private void isStringNull(String textToCheck) throws NullPointerException{
-            if(textToCheck.isEmpty()){
+        private void isStringNull(String textToCheck) throws NullPointerException {
+            if (textToCheck.isEmpty()) {
                 String errorText = "Tytuł jest pusty";
                 throw new NullPointerException(errorText);
             }
@@ -96,10 +90,10 @@ public class NewRecipeFrame extends JDialog {
 
         private double getTimeAsDouble(String timeAsString) throws NumberFormatException {
             double timeAsDouble = 0;
-            try{
+            try {
                 timeAsDouble = Double.parseDouble(timeAsString);
-            }catch (NumberFormatException ex){
-                String errorText = "Zły format do zapisu pliku";
+            } catch (NumberFormatException ex) {
+                String errorText = "To nie jest liczba zmiennoprzecinkowa";
                 throw new NumberFormatException(errorText);
             }
             return timeAsDouble;

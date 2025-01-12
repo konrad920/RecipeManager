@@ -1,4 +1,6 @@
-package org.example;
+package org.example.DataAccess;
+
+import org.example.Components.ConsoleLogger;
 
 import java.util.ArrayList;
 

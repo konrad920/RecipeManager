@@ -1,30 +1,20 @@
 package org.example;
 
-import javax.swing.*;
+import org.example.Components.ConsoleLogger;
+import org.example.DataAccess.FileRepository;
+import org.example.UI.Frame;
+
 import java.io.FileNotFoundException;
 import java.util.Scanner;
-import java.awt.event.*;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
-        //Scanner scanner = new Scanner(System.in);
-        //ConsoleLogger consoleLogger = new ConsoleLogger();
-        //ListRepository listRepository = new ListRepository(consoleLogger);
-        //FileRepository fileRepository = new FileRepository(consoleLogger);
         Frame frame = new Frame();
         frame.setVisible(true);
+//        ConsoleLogger consoleLogger = new ConsoleLogger();
+//        FileRepository fileRepository = new FileRepository(consoleLogger);
+//        Scanner scanner = new Scanner(System.in);
 
-//        frame.bNewFile.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                try {
-//                    fileRepository.addNewFile();
-//                } catch (FileNotFoundException ex) {
-//                    System.out.println(ex.getMessage());
-//                }
-//            }
-//        });
-//
 //        frame.bShowFile.addActionListener(new ActionListener() {
 //            @Override
 //            public void actionPerformed(ActionEvent e) {
@@ -35,13 +25,6 @@ public class Main {
 //                    } catch (FileNotFoundException ex) {
 //                        System.out.println(ex.getMessage());
 //                    }
-//            }
-//        });
-//
-//        frame.bExit.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 //            }
 //        });
     }

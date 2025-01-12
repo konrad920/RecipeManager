@@ -1,11 +1,10 @@
-package org.example;
+package org.example.UI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Scanner;
 
 public class Frame extends JFrame {
 

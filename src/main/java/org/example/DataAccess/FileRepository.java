@@ -1,4 +1,8 @@
-package org.example;
+package org.example.DataAccess;
+
+import org.example.Components.ConsoleLogger;
+import org.example.Components.FileReader;
+import org.example.Components.FileWriter;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -24,14 +28,18 @@ public class FileRepository {
     }
 
     public void addNewFileFromFrame(String title, String description, double timeToPrepared) throws FileNotFoundException {
-        Recipe newRecipe = new Recipe(title, description, timeToPrepared);
-        String path = String.format("%s%s.txt", fileDestinationPrefix, newRecipe.getTitle());
-        FileWriter fileWriter = new FileWriter(path);
-        fileWriter.writeFile(newRecipe.getDescription(), newRecipe.getTimeToPrepared());
+        if (isFileExist(title + ".txt")) {
+            System.out.printf("plik %s już istnieje", title);
+        } else {
+            Recipe newRecipe = new Recipe(title, description, timeToPrepared);
+            String path = String.format("%s%s.txt", fileDestinationPrefix, newRecipe.getTitle());
+            FileWriter fileWriter = new FileWriter(path);
+            fileWriter.writeFile(newRecipe.getDescription(), newRecipe.getTimeToPrepared());
 
-        String infoString = String.format("Utworzono plik %s", newRecipe.getTitle());
-        logger.info(infoString);
-        throw new FileNotFoundException(infoString);
+            String infoString = String.format("Utworzono plik %s", newRecipe.getTitle());
+            logger.info(infoString);
+            throw new FileNotFoundException(infoString);
+        }
     }
 
     public void printFile(String fileNameToFind) throws FileNotFoundException {
@@ -48,7 +56,7 @@ public class FileRepository {
                     if (file.isDirectory()) {
                         getFile(file, fileNameToFind);
                     } else {
-                        if(file.getName().equals(fileNameToFind)){
+                        if (file.getName().equals(fileNameToFind)) {
                             return file;
                         }
                     }
@@ -56,5 +64,16 @@ public class FileRepository {
             }
         }
         throw new FileNotFoundException("Nie ma takiego przepisu");
+    }
+
+    private boolean isFileExist(String fileTitleToFind) {
+        try {
+            File fileToFind = getFile(this.directory, fileTitleToFind);
+            if (fileToFind.getName().equals(fileTitleToFind))
+                return true;
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+        return false;
     }
 }
