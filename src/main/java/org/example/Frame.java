@@ -5,16 +5,15 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.Scanner;
 
 public class Frame extends JFrame {
 
     public Frame() {
-        //podstawowe ustawienia ramki
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.setTitle("Recipe Manager");
         this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\programy java\\RecipeManager\\img\\icon.jpg"));
 
-        //centrowanie ramki
         int screenWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
         int screenHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
         this.setSize(screenWidth / 2, screenHeight / 2);
@@ -26,16 +25,19 @@ public class Frame extends JFrame {
     }
 
     public void initComponents() {
+        looksOption.addItem("Metal");
+        looksOption.addItem("Windows");
+        looksOption.addActionListener(new LooksHandler());
+
         panel.add(timer);
         panel.add(time);
         ActionListener timer = new TimeListener();
         Timer clock = new Timer(1000, timer);
         clock.start();
 
-        this.addWindowListener(new ExitHandler());
-
         bNewFile.addActionListener(new NewRecipeHandler());
         bExit.addActionListener(new ExitHandler());
+        this.addWindowListener(new ExitHandler());
 
         GroupLayout layout = new GroupLayout(getContentPane());
         this.getContentPane().setLayout(layout);
@@ -45,18 +47,20 @@ public class Frame extends JFrame {
         layout.setHorizontalGroup(
                 layout.createSequentialGroup()
                         .addGroup(
-                                layout.createParallelGroup().addComponent(bNewFile).addComponent(bShowFile)
+                                layout.createParallelGroup().addComponent(panel).addComponent(bNewFile).addComponent(bShowFile)
                         ).addGroup(
                                 layout.createParallelGroup().addComponent(bEditRecipe).addComponent(bDeleteRecipe)
                         ).addGap(10, 20, Short.MAX_VALUE)
-                        .addComponent(panel)
-                        .addComponent(bExit)
+                        .addGroup(
+                                layout.createParallelGroup().addComponent(looksOption).addComponent(bExit)
+                        )
         );
 
         layout.setVerticalGroup(
                 layout.createSequentialGroup()
-                        .addComponent(panel)
                         .addGroup(
+                                layout.createParallelGroup().addComponent(panel).addComponent(looksOption)
+                        ).addGroup(
                                 layout.createParallelGroup().addComponent(bNewFile).addComponent(bEditRecipe)
                         ).addGroup(
                                 layout.createParallelGroup().addComponent(bShowFile).addComponent(bDeleteRecipe)
@@ -70,6 +74,8 @@ public class Frame extends JFrame {
     JPanel panel = new JPanel();
     JLabel timer = new JLabel("Clock: ");
     JLabel time = new JLabel(getTime());
+
+    JComboBox looksOption = new JComboBox();
 
     JButton bNewFile = new JButton("Add New Recipe");
     JButton bShowFile = new JButton("Show Recipe");
@@ -100,6 +106,30 @@ public class Frame extends JFrame {
             int option = JOptionPane.showConfirmDialog(rootPane, "Czy napewno chcesz zamknąć program?", "Exit confirmation", JOptionPane.YES_NO_OPTION);
             if (option == 0)
                 System.exit(0);
+        }
+    }
+
+    private class LooksHandler implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String looksName = "";
+            if(((JComboBox)e.getSource()).getSelectedItem().equals("Metal"))
+                looksName = "javax.swing.plaf.metal.MetalLookAndFeel";
+            else if(((JComboBox)e.getSource()).getSelectedItem().equals("Windows"))
+                looksName = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
+
+            try {
+                UIManager.setLookAndFeel(looksName);
+            } catch (ClassNotFoundException ex) {
+                ex.getMessage();
+            } catch (InstantiationException ex) {
+                ex.getMessage();
+            } catch (IllegalAccessException ex) {
+                ex.getMessage();
+            } catch (UnsupportedLookAndFeelException ex) {
+                ex.getMessage();
+            }
         }
     }
 
