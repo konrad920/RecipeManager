@@ -35,4 +35,23 @@ public class FileReader {
             System.out.println(line);
         }
     }
+
+    public List<String> readFileToString() throws FileNotFoundException {
+        File file = new File(this.path);
+        Scanner in = new Scanner(file);
+
+        List<String>listOfLines = new ArrayList<>();
+        while (true){
+            try{
+                String line = in.nextLine();
+                if(line != null){
+                    listOfLines.add(line);
+                }
+            }catch (NoSuchElementException e){
+                System.out.println("Zakończono wczytywanie pliku");
+                break;
+            }
+        }
+        return listOfLines;
+    }
 }

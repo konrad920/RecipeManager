@@ -1,5 +1,8 @@
 package org.example.UI;
 
+import org.example.Components.ConsoleLogger;
+import org.example.DataAccess.FileRepository;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -7,6 +10,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Frame extends JFrame {
+    private ConsoleLogger consoleLogger = new ConsoleLogger();
+    private FileRepository fileRepository = new FileRepository(consoleLogger);
 
     public Frame() {
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -35,6 +40,7 @@ public class Frame extends JFrame {
         clock.start();
 
         bNewFile.addActionListener(new NewRecipeHandler());
+        bShowFile.addActionListener(new ShowRecipeHandler());
         bExit.addActionListener(new ExitHandler());
         this.addWindowListener(new ExitHandler());
 
@@ -86,7 +92,16 @@ public class Frame extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            NewRecipeFrame recipeFrame = new NewRecipeFrame();
+            NewRecipeFrame recipeFrame = new NewRecipeFrame(fileRepository);
+            recipeFrame.setVisible(true);
+        }
+    }
+
+    private class ShowRecipeHandler implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            ShowRecipeFrame recipeFrame = new ShowRecipeFrame(fileRepository);
             recipeFrame.setVisible(true);
         }
     }

@@ -1,20 +1,24 @@
 package org.example.UI;
 
-import org.example.Components.ConsoleLogger;
 import org.example.DataAccess.FileRepository;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.event.*;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
-public class NewRecipeFrame extends JDialog {
-    private ConsoleLogger consoleLogger = new ConsoleLogger();
-    private FileRepository fileRepository = new FileRepository(consoleLogger);
+public class NewRecipeFrame extends JFrame {
+    private FileRepository fileRepository;
 
-    public NewRecipeFrame() {
-        this.setTitle("New recipe");
+    public NewRecipeFrame(FileRepository fileRepository) {
+        this.fileRepository = fileRepository;
+        this.setTitle("New Recipe");
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        this.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\programy java\\RecipeManager\\img\\newRecipeIcon.jpg"));
         this.setBounds(800, 200, 300, 300);
 
         this.initComponents();
@@ -22,6 +26,20 @@ public class NewRecipeFrame extends JDialog {
 
     public void initComponents() {
         confirm.addActionListener(new ConfirmHandler());
+        this.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                int option = JOptionPane.showConfirmDialog(rootPane, "Czy napewno zakończyłeś wprowadzanie nowego przepisu?", "Confirm NewRecipe",JOptionPane.YES_NO_OPTION);
+                if(option == 0)
+                {
+                    NewRecipeFrame.this.dispose();
+                }
+            }
+        });
+
+        titleField.addKeyListener(new KeyHandler());
+        descriptionArea.addKeyListener(new KeyHandler());
+        timeToPrepareField.addKeyListener(new KeyHandler());
 
         GroupLayout layout = new GroupLayout(getContentPane());
         this.getContentPane().setLayout(layout);
@@ -66,7 +84,7 @@ public class NewRecipeFrame extends JDialog {
     private JLabel timeToPreparedLabel = new JLabel("Czas potrzebny do przygotowania:");
     private JLabel descriptionLabel = new JLabel("Opis sposobu przygotowania:");
 
-    public class ConfirmHandler implements ActionListener {
+    public class ConfirmHandler extends WindowAdapter implements ActionListener {
 
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -79,6 +97,7 @@ public class NewRecipeFrame extends JDialog {
             } catch (FileNotFoundException | NumberFormatException | NullPointerException ex) {
                 System.out.println(ex.getMessage());
             }
+            NewRecipeFrame.this.dispose();
         }
 
         private void isStringNull(String textToCheck) throws NullPointerException {
@@ -97,6 +116,24 @@ public class NewRecipeFrame extends JDialog {
                 throw new NumberFormatException(errorText);
             }
             return timeAsDouble;
+        }
+    }
+
+    private class KeyHandler extends KeyAdapter{
+        public void keyPressed(KeyEvent e) {
+            if(e.getKeyCode() == KeyEvent.VK_CONTROL && e.getKeyCode() == KeyEvent.VK_V){
+                Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                DataFlavor flavor = DataFlavor.stringFlavor;
+                String stringClipboard = "";
+
+                try {
+                    stringClipboard = (String) clipboard.getData(flavor);
+                } catch (IOException ex) {
+                    System.out.println("Wystąpił błąd na wejściu/wyjściu");;
+                } catch (UnsupportedFlavorException ex) {
+                    System.out.println("To nie jest String");;
+                }
+            }
         }
     }
 }

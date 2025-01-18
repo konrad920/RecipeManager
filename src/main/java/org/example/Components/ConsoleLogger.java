@@ -2,14 +2,15 @@ package org.example.Components;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class ConsoleLogger {
     private String path = "C:\\programy java\\RecipeManager\\Logger\\logger.txt";
+    private SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH-mm-ss");
 
     public void info(String message) {
         loggerWriter("INFO: " + message);
@@ -21,8 +22,9 @@ public class ConsoleLogger {
 
     public void loggerWriter(String message) {
         try {
-            PrintWriter writer = new PrintWriter(this.path);
-            writer.println(message);
+            FileOutputStream fileOutputStream = new FileOutputStream(this.path, true);
+            PrintWriter writer = new PrintWriter(fileOutputStream, true);
+            writer.printf("[%s] %s",getCurrentDateString(), message);
             writer.close();
         } catch (FileNotFoundException e) {
             System.out.println("Nie znaleziono pliku logger.txt");
@@ -48,5 +50,10 @@ public class ConsoleLogger {
         for(String line : loggerText){
             System.out.println(line);
         }
+    }
+
+    private String getCurrentDateString(){
+        Date now = new Date();
+        return this.dateFormat.format(now);
     }
 }

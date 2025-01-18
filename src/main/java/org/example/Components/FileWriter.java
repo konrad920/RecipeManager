@@ -9,6 +9,7 @@ public class FileWriter {
 
     public FileWriter(String path){
         this.path = path;
+
     }
 
     public void writeFile(String text, double value) throws FileNotFoundException {
